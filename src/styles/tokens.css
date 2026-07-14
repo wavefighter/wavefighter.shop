@@ -1,0 +1,182 @@
+/* =============================================================================
+   WAVEFIGHTER — DESIGN TOKENS
+   -----------------------------------------------------------------------------
+   Every colour below was SAMPLED FROM THE LOGO, not chosen.
+
+     #031E3E  — 51% of the mark. The hull, the "WAVE" wordmark, the dark spray.
+     #015AB6  — 18% of the mark. The "FIGHTER" wordmark, the blue spray, the speed lines.
+
+   Both sit at hue 210–213 at very high saturation. That is the entire brand: ONE HUE,
+   TWO DEPTHS. No colour enters this system that is not in the logo — including the
+   neutrals, which carry the same 210 hue at low saturation so that even the greys belong
+   to the mark rather than sitting beside it.
+
+   There is no orange. There is no second hue. The discipline IS the identity: a marine
+   instrument brand does not need a warm accent to look expensive, it needs conviction.
+
+   STRUCTURE — two layers, and the distinction is the whole point:
+     1. PRIMITIVES (--wf-*)     the raw ramps. A component may NEVER reference these.
+     2. SEMANTICS  (--surface…) meaning. This is all a component may use.
+
+   Every text pair below has been measured against WCAG. The ratios are in the comments.
+   Nothing under 4.5:1 for body text ships. That is not negotiable, and it is why
+   --text-muted is darker than it "looks like it wants to be".
+   ========================================================================== */
+
+:root {
+  /* --- PRIMITIVE: ABYSS ------------------------------------------------------
+     Anchored so that --wf-abyss-900 IS the logo's navy. The colour of deep water and
+     of an unlit instrument panel. This is the voice of the brand: authority, held quietly. */
+  --wf-abyss-50:  #F1F4F9;
+  --wf-abyss-100: #E3EAF2;
+  --wf-abyss-200: #CBD8E7;
+  --wf-abyss-300: #A6BBD3;
+  --wf-abyss-400: #6490C4;
+  --wf-abyss-500: #2B66AB;
+  --wf-abyss-600: #134886;
+  --wf-abyss-700: #083263;
+  --wf-abyss-800: #05264D;
+  --wf-abyss-900: #031F3F;  /* ← the logo's hull navy */
+  --wf-abyss-950: #011327;
+
+  /* --- PRIMITIVE: AZURE ------------------------------------------------------
+     Anchored so that --wf-azure-600 IS the logo's blue. This is the brand's energy, and it
+     does every job an accent colour does — links, active states, the primary CTA. It is
+     the only colour on the site that says "act". */
+  --wf-azure-50:  #EBF5FF;
+  --wf-azure-100: #CDE5FE;
+  --wf-azure-200: #9CCBFC;
+  --wf-azure-300: #60ACFB;  /* on-dark interactive: 7.8:1 on abyss-950 */
+  --wf-azure-400: #1D8AFC;
+  --wf-azure-500: #0271E3;
+  --wf-azure-600: #015AB7;  /* ← the logo's FIGHTER blue. White on it: 6.67:1 */
+  --wf-azure-700: #024992;  /* links on white: 8.86:1 */
+  --wf-azure-800: #033A72;
+  --wf-azure-900: #042D58;
+
+  /* --- PRIMITIVE: STEEL ------------------------------------------------------
+     Neutrals carrying the mark's own 210 hue at low saturation. A truly neutral grey would
+     read as foreign next to this much saturated blue; these greys are part of the family. */
+  --wf-steel-0:   #FFFFFF;
+  --wf-steel-50:  #F9FAFB;
+  --wf-steel-100: #F3F5F6;
+  --wf-steel-200: #E5E8EB;
+  --wf-steel-300: #CCD1D7;
+  --wf-steel-400: #9AA3AC;
+  --wf-steel-500: #6B7580;  /* 4.69:1 on white — the darkest we can go and still call it "muted" */
+  --wf-steel-600: #58616A;  /* 6.30:1 on white */
+  --wf-steel-700: #40474F;
+  --wf-steel-800: #2B3036;
+  --wf-steel-900: #1A1F23;
+
+  /* --- PRIMITIVE: STATUS -----------------------------------------------------
+     Semantic ONLY. These never decorate anything — they appear in form validation and
+     nowhere else. They are held at the brand's saturation discipline so they read as part
+     of the system rather than as bolted-on framework defaults. */
+  --wf-success: #137659;  /* 5.58:1 on white */
+  --wf-warning: #915F08;  /* 5.46:1 on white */
+  --wf-error:   #AB2521;  /* 6.96:1 on white */
+
+  /* --- PRIMITIVE: CHANNEL ----------------------------------------------------
+     WhatsApp's own green. NEVER restyled to fit the palette — its recognisability is the
+     trust signal, and repainting it blue would be a designer's win and a customer's loss.
+     It is the single permitted exception to the one-hue rule, and it is permitted because
+     it is not ours to change. */
+  --wf-whatsapp:       #25D366;
+  --wf-whatsapp-hover: #1EB955;
+
+  /* ===========================================================================
+     SEMANTICS — the only names a component may use
+     ======================================================================== */
+
+  /* Surfaces. The site is LIGHT-LED with deep navy instrument bands, and that is a
+     decision the logo made for us: the mark is navy-on-blue, so it cannot sit on a dark
+     surface without disappearing. Header and footer are therefore light, always. */
+  --surface:          var(--wf-steel-0);
+  --surface-sunken:   var(--wf-steel-50);
+  --surface-raised:   var(--wf-steel-0);
+  --surface-inverse:  var(--wf-abyss-950);   /* the instrument panel */
+  --surface-inverse-2:var(--wf-abyss-900);
+  --surface-brand:    var(--wf-abyss-50);    /* tinted panels, quietly on-brand */
+
+  /* Text */
+  --text-primary:     var(--wf-abyss-950);   /* 16.5:1 on white */
+  --text-secondary:   var(--wf-steel-600);   /*  6.3:1 */
+  --text-muted:       var(--wf-steel-500);   /*  4.7:1 — verified, not eyeballed */
+  --text-inverse:     var(--wf-steel-0);
+  --text-inverse-muted: var(--wf-abyss-300); /* on navy: 8.4:1 */
+  --text-on-brand:    var(--wf-steel-0);
+  --text-on-accent:   var(--wf-steel-0);
+  --text-link:        var(--wf-azure-700);   /*  8.9:1 */
+
+  /* Borders — hairlines, not boxes. This system draws with rules, not shadows. */
+  --border:           var(--wf-steel-200);
+  --border-strong:    var(--wf-steel-300);
+  --border-brand:     var(--wf-abyss-200);
+  --border-inverse:   var(--wf-abyss-800);
+
+  /* Brand + interactive */
+  --brand:            var(--wf-abyss-900);
+  --brand-hover:      var(--wf-abyss-800);
+  --brand-subtle:     var(--wf-abyss-50);
+
+  --accent:           var(--wf-azure-600);   /* the CTA. The only colour that says "act". */
+  --accent-hover:     var(--wf-azure-700);
+  --accent-subtle:    var(--wf-azure-50);
+  --accent-on-dark:   var(--wf-azure-300);   /* interactive text on the navy bands */
+
+  --focus-ring:       var(--wf-azure-500);
+  --focus-ring-inverse: var(--wf-azure-300);
+
+  --success:          var(--wf-success);
+  --warning:          var(--wf-warning);
+  --error:            var(--wf-error);
+
+  /* --- Radius -----------------------------------------------------------------
+     Restrained. Premium-marine is machined, not pill-shaped: an instrument bezel has a
+     2–4px break on it, not a 24px one. */
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-xl: 14px;
+
+  /* --- Elevation ---------------------------------------------------------------
+     We draw with hairlines. Shadows exist to lift an element off the page on hover, and
+     for almost nothing else. They are tinted with the brand navy rather than black, so a
+     shadow never introduces a grey that is not in the family. */
+  --shadow-sm:  0 1px 2px 0 rgb(1 19 39 / 0.04);
+  --shadow-md:  0 4px 12px -2px rgb(1 19 39 / 0.08), 0 2px 4px -2px rgb(1 19 39 / 0.04);
+  --shadow-lg:  0 12px 32px -8px rgb(1 19 39 / 0.14), 0 4px 8px -4px rgb(1 19 39 / 0.06);
+
+  /* --- Motion -------------------------------------------------------------------
+     Premium motion is FAST and it is SMALL. Anything a user can consciously watch is too
+     slow; anything they can see move across the screen is too much. These curves are
+     decelerating — things arrive and settle, they never bounce. Nothing on this site
+     animates on scroll. */
+  --duration-fast:  120ms;
+  --duration-base:  200ms;
+  --duration-slow:  360ms;
+  --ease-out:  cubic-bezier(0.22, 1, 0.36, 1);   /* decelerate — the workhorse */
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* --- Layout -------------------------------------------------------------------- */
+  --container-max: 1240px;
+  --header-height: 76px;
+
+  /* --- Type scale ----------------------------------------------------------------
+     Fluid only at display sizes; fixed everywhere else, because a body size that changes
+     with the viewport is a body size nobody chose. */
+  --text-display: clamp(2.5rem, 1.6rem + 3.8vw, 4.5rem);
+  --text-h1:      clamp(2rem, 1.5rem + 2.2vw, 3rem);
+  --text-h2:      clamp(1.5rem, 1.3rem + 1vw, 2rem);
+  --tracking-display: -0.03em;
+  --tracking-eyebrow:  0.18em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration-base: 0ms;
+    --duration-slow: 0ms;
+  }
+}

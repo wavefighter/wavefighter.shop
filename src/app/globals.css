@@ -1,0 +1,250 @@
+@import 'tailwindcss';
+@import '../styles/tokens.css';
+
+/* Semantic tokens are mapped into Tailwind so that utilities read as MEANING:
+   `bg-surface`, `text-muted`, `border-default`, `bg-accent`.
+
+   Note what is deliberately NOT exposed: the raw ramps. A developer cannot write
+   `bg-abyss-900`, because that class does not exist. Consistency by construction beats
+   consistency by code review — and it means a future rebrand is one file, not eighty. */
+@theme inline {
+  --color-surface:           var(--surface);
+  --color-surface-sunken:    var(--surface-sunken);
+  --color-surface-raised:    var(--surface-raised);
+  --color-surface-inverse:   var(--surface-inverse);
+  --color-surface-inverse-2: var(--surface-inverse-2);
+  --color-surface-brand:     var(--surface-brand);
+
+  --color-primary:        var(--text-primary);
+  --color-secondary:      var(--text-secondary);
+  --color-muted:          var(--text-muted);
+  --color-inverse:        var(--text-inverse);
+  --color-inverse-muted:  var(--text-inverse-muted);
+  --color-on-brand:       var(--text-on-brand);
+  --color-on-accent:      var(--text-on-accent);
+  --color-link:           var(--text-link);
+
+  --color-default:  var(--border);
+  --color-strong:   var(--border-strong);
+  --color-brandline:var(--border-brand);
+  --color-inverse-line: var(--border-inverse);
+
+  --color-brand:         var(--brand);
+  --color-brand-hover:   var(--brand-hover);
+  --color-brand-subtle:  var(--brand-subtle);
+
+  --color-accent:         var(--accent);
+  --color-accent-hover:   var(--accent-hover);
+  --color-accent-subtle:  var(--accent-subtle);
+  --color-accent-on-dark: var(--accent-on-dark);
+
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error:   var(--error);
+
+  --color-whatsapp:       var(--wf-whatsapp);
+  --color-whatsapp-hover: var(--wf-whatsapp-hover);
+
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+
+  /* Two faces, each with a job.
+     ARCHIVO  — display. A wide grotesque that echoes the mark's breadth without imitating
+                its italic. It appears at headline sizes and in the uppercase eyebrows, and
+                nowhere else.
+     PLEX     — text and UI. Engineered, quiet, and with the best tabular figures on Google
+                Fonts. This is an equipment catalogue: the numbers ARE the content, and a
+                spec column set in a face with proportional digits is unreadable. */
+  --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-sans:    var(--font-plex), ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+}
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    margin: 0;
+    background: var(--surface);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    font-synthesis-weight: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Horsepower, lengths, weights, capacities. In a marine catalogue the numbers are the
+     content, and proportional digits make a spec column impossible to scan down. */
+  table, .tabular, .spec { font-variant-numeric: tabular-nums; }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: var(--tracking-display);
+    line-height: 1.08;
+    text-wrap: balance;
+  }
+
+  p { text-wrap: pretty; }
+
+  /* One focus style. Everywhere. Never removed — not for "cleanliness", not because a
+     client dislikes the outline. It is azure, so even the focus ring is on-brand. */
+  :focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+  .on-dark :focus-visible { outline-color: var(--focus-ring-inverse); }
+
+  img, svg, video { max-width: 100%; height: auto; display: block; }
+
+  ::selection { background: var(--wf-azure-100); color: var(--text-primary); }
+}
+
+@layer components {
+  /* ---------------------------------------------------------------------------
+     THE WATERLINE — the one signature element in this system.
+
+     The logo has short blue speed-lines running out from under the wordmark. This is that
+     gesture, abstracted: a hairline rule that begins as a solid azure segment and fades
+     into the border colour. It marks the start of a section the way a waterline marks a
+     hull, and it appears nowhere else.
+
+     One idea, used consistently, is what makes an identity. Six ideas used once each is
+     what makes a template.
+     ------------------------------------------------------------------------ */
+  .waterline {
+    position: relative;
+  }
+  .waterline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      var(--accent) 0,
+      var(--accent) 56px,
+      var(--border) 56px,
+      var(--border) 100%
+    );
+  }
+  .waterline-inverse::before {
+    background: linear-gradient(
+      to right,
+      var(--accent-on-dark) 0,
+      var(--accent-on-dark) 56px,
+      var(--border-inverse) 56px,
+      var(--border-inverse) 100%
+    );
+  }
+
+  /* The section eyebrow: uppercase, wide-tracked, azure. Reads as an instrument label. */
+  .eyebrow {
+    font-family: var(--font-display);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-eyebrow);
+    color: var(--accent);
+  }
+  .eyebrow-inverse { color: var(--accent-on-dark); }
+
+  /* Card lift. 2px, 200ms, decelerating. You should feel it rather than watch it. */
+  .card-lift {
+    transition:
+      transform var(--duration-base) var(--ease-out),
+      box-shadow var(--duration-base) var(--ease-out),
+      border-color var(--duration-base) var(--ease-out);
+  }
+  @media (hover: hover) {
+    .card-lift:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--border-strong);
+    }
+  }
+
+  /* Navigation underline. Grows from the left, 200ms. The single most-used interaction on
+     the site, so it is the one that most needs to feel considered. */
+  .nav-underline {
+    position: relative;
+  }
+  .nav-underline::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    height: 2px;
+    width: 100%;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--duration-base) var(--ease-out);
+  }
+  .nav-underline:hover::after,
+  .nav-underline[aria-current='page']::after { transform: scaleX(1); }
+}
+
+@layer utilities {
+  .skip-link {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    translate: -50% -200%;
+    z-index: 100;
+    padding: 0.75rem 1.5rem;
+    background: var(--brand);
+    color: var(--text-on-brand);
+    font-weight: 500;
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+    transition: translate var(--duration-base) var(--ease-out);
+  }
+  .skip-link:focus-visible { translate: -50% 0; }
+
+  /* Entrance, on load only — never on scroll.
+     Scroll-triggered reveals cost JavaScript, delay the LCP, and make a catalogue feel like
+     a landing page instead of a tool. This is CSS-only, runs once, and is disabled outright
+     under prefers-reduced-motion. */
+  @keyframes wf-rise {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: none; }
+  }
+  .rise {
+    animation: wf-rise var(--duration-slow) var(--ease-out) both;
+  }
+  .rise-1 { animation-delay: 60ms; }
+  .rise-2 { animation-delay: 120ms; }
+  .rise-3 { animation-delay: 180ms; }
+
+  /* The hull gradient: the navy band is not a flat fill. It deepens downward, the way a
+     water column does. Subtle enough that nobody will name it; absent, and the band looks
+     like a div. */
+  .hull {
+    background:
+      radial-gradient(120% 100% at 50% 0%, var(--wf-abyss-800) 0%, var(--wf-abyss-950) 62%);
+  }
+}
